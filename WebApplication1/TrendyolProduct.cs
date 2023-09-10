@@ -20,7 +20,7 @@ namespace WebApplication1
             trendyolProductModels = new List<TrendyolProductModel>();
             // send GET request with RestSharp
             var client = new RestClient("https://www.trendyol.com");
-            string RequestURLDetail = "https://www.trendyol.com/erkek-gomlek-x-g2-c75";//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
+            string RequestURLDetail = "https://www.trendyol.com/" + SubURL;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
             long  id = 112227760;
 
 
@@ -98,9 +98,9 @@ namespace WebApplication1
         public void getProductDetails(String URLList1)
         {
             var client = new RestClient("https://www.trendyol.com");
-            string RequestURLDetail = "https://www.trendyol.com/erkek-gomlek-x-g2-c75";//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
+            string RequestURLDetail = RequestURLDetail = "https://www.trendyol.com" + URLList1;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
 
-            RequestURLDetail = "https://www.trendyol.com" + URLList1; //1. Ürün Html aldık
+           
 
             var request = new RestRequest(RequestURLDetail);
             var response = client.ExecuteGet(request);

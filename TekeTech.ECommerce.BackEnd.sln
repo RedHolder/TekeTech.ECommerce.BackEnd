@@ -17,6 +17,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E739F3B2-688E-432A-AB5A-81F5489889EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{6066ED29-2019-408A-ACC8-DE9EC133AD8F}"
+	ProjectSection(SolutionItems) = preProject
+		src\Clients\ReadMe.txt = src\Clients\ReadMe.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApiGateway", "WebApiGateway", "{FEDC69C0-1F1D-4B66-8C90-40C36FD036B5}"
 EndProject
@@ -25,6 +28,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{09651AE7-36D8-4C8D-A559-0A261631F004}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactWebApp", "ReactWebApp", "{99ACAF73-6233-4EF4-B7E3-F73737A8B1A1}"
+	ProjectSection(SolutionItems) = preProject
+		src\Clients\ReactWebApp\ReadMe.txt = src\Clients\ReactWebApp\ReadMe.txt
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonService.Api", "src\Services\AmazonService\AmazonService.Api\AmazonService.Api.csproj", "{3B6E268D-8D3C-45D0-BBF9-D88A1281DF65}"
 EndProject
@@ -38,7 +44,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.RabbitMQ", "src\Bu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendyolProduct.Api", "src\Services\TrendyolProduct.Api\TrendyolProduct.Api.csproj", "{9053DE77-64D7-4806-993F-4894B63C0297}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrendyolProduct.Api", "src\Services\TrendyolProduct.Api\TrendyolProduct.Api.csproj", "{9053DE77-64D7-4806-993F-4894B63C0297}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

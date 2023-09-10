@@ -20,11 +20,11 @@ namespace WebApplication1.Controllers
 
         TrendyolProduct ty;
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("{parameter}", Name = "GetWeatherForecast")]
+        public IEnumerable<WeatherForecast> Get(string parameter)
         {
             ty = new TrendyolProduct();
-            ty.getreq("");
+            ty.getreq(parameter);
            
 
          
