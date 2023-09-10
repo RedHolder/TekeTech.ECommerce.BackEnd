@@ -115,13 +115,21 @@ namespace WebApplication1
             string brandNamePatternWithLink = "<a class=\"product-brand-name-with-link\" href=\"(.*?)</a>";
             string productNamePattern = "<span>(.*?)</span>";
             string territoryPattern = "<span id=\"cityInfo\">Şehir:<b>(.*?)</b></span>";
+            string findPricePattern = "<div class=\"product-detail-wrapper\">(.*?)<div class=\"product-info-badges\">";
             string pricePattern = "<span class=\"prc-dsc\">(.*?)</span>";
             string sizePattern = "Beden seçmek için tıklayınız\">(.*?)</div>";
+            
 
             // Use regular expression to find the specified string
             MatchCollection match1 = Regex.Matches(y, productNameGeneralPattern);
             MatchCollection territoryMatch = Regex.Matches(y, territoryPattern);
-            MatchCollection priceMatch = Regex.Matches(y, pricePattern);
+            MatchCollection findPriceMatch= Regex.Matches(y, findPricePattern);
+
+
+            MatchCollection priceMatch = Regex.Matches(findPriceMatch[0].Groups[1].Value, pricePattern);
+               
+
+            
             MatchCollection sizeMatch = Regex.Matches(y, sizePattern);
 
 
@@ -201,12 +209,7 @@ namespace WebApplication1
                 string s = mat;
 
                 string readText = File.ReadAllText(@"C:\File\test.txt");
-                using (StreamWriter writer = new StreamWriter(@"C:\File\test.txt"))
-                {
-
-                    writer.WriteLine(readText + s.ToString()); //Sayfadaki Ürün Linklerini Çıkardık. Text Dosyasına Yazdık Şimdilik
-                    writer.WriteLine("");
-                }
+               
 
             }
 
