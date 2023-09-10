@@ -28,7 +28,7 @@ namespace WebApplication1
 
             var request = new RestRequest(RequestURLDetail);
             var response = client.ExecuteGet(request);
-            var y = response.Content; //search sonucunu analiz için aldım. Html page elimizde. Buradann linkin altındaki ilk x sayıda ürünü alacağız
+            var y = response.Content; //seasdarch sonucunu analiz için aldım. Html page elimizde. Buradann linkin altındaki ilk x sayıda ürünü alacağız
 
             string startPattern = "<div class=\"prdct-cntnr-wrppr\">";
             string endPattern = "<div class=\"virtual\">";
