@@ -28,13 +28,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactWebApp", "ReactWebApp"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazonService.Api", "src\Services\AmazonService\AmazonService.Api\AmazonService.Api.csproj", "{3B6E268D-8D3C-45D0-BBF9-D88A1281DF65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Base", "src\Buildingblocks\EventBus\EventBus.Base\EventBus.Base.csproj", "{DDD9C2F3-E54D-438A-B916-CF2BBB1D5B74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Base", "src\Buildingblocks\EventBus\EventBus.Base\EventBus.Base.csproj", "{DDD9C2F3-E54D-438A-B916-CF2BBB1D5B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Factory", "src\Buildingblocks\EventBus\EventBus.Factory\EventBus.Factory.csproj", "{9FB97D0D-EA23-4546-BF85-80AF40DC2B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Factory", "src\Buildingblocks\EventBus\EventBus.Factory\EventBus.Factory.csproj", "{9FB97D0D-EA23-4546-BF85-80AF40DC2B94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.AzureServiceBus", "src\Buildingblocks\EventBus\EventBus.AzureServiceBus\EventBus.AzureServiceBus.csproj", "{201E500D-912D-4A29-9622-F8BB913CE286}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.AzureServiceBus", "src\Buildingblocks\EventBus\EventBus.AzureServiceBus\EventBus.AzureServiceBus.csproj", "{201E500D-912D-4A29-9622-F8BB913CE286}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.RabbitMQ", "src\Buildingblocks\EventBus\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj", "{F0D18E5E-0978-4CC5-8A2F-AB3D6F81ED14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.RabbitMQ", "src\Buildingblocks\EventBus\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj", "{F0D18E5E-0978-4CC5-8A2F-AB3D6F81ED14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendyolProduct.Api", "src\Services\TrendyolProduct.Api\TrendyolProduct.Api.csproj", "{9053DE77-64D7-4806-993F-4894B63C0297}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +70,14 @@ Global
 		{F0D18E5E-0978-4CC5-8A2F-AB3D6F81ED14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0D18E5E-0978-4CC5-8A2F-AB3D6F81ED14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0D18E5E-0978-4CC5-8A2F-AB3D6F81ED14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9053DE77-64D7-4806-993F-4894B63C0297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9053DE77-64D7-4806-993F-4894B63C0297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9053DE77-64D7-4806-993F-4894B63C0297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9053DE77-64D7-4806-993F-4894B63C0297}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +96,8 @@ Global
 		{9FB97D0D-EA23-4546-BF85-80AF40DC2B94} = {09651AE7-36D8-4C8D-A559-0A261631F004}
 		{201E500D-912D-4A29-9622-F8BB913CE286} = {09651AE7-36D8-4C8D-A559-0A261631F004}
 		{F0D18E5E-0978-4CC5-8A2F-AB3D6F81ED14} = {09651AE7-36D8-4C8D-A559-0A261631F004}
+		{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A} = {E739F3B2-688E-432A-AB5A-81F5489889EE}
+		{9053DE77-64D7-4806-993F-4894B63C0297} = {E739F3B2-688E-432A-AB5A-81F5489889EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E78AE12D-B4AC-4D8D-B904-6EB4372D084A}
