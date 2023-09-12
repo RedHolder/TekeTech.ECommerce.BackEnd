@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers
 {
 
     [ApiController]
     [Route("[controller]")]
-    public class AmazonController1 : Controller
+    public class TestController : Controller
     {
-
         private static readonly string[] Summaries = new[]
-        {
+     {
         "Pembesi", "Gtti", "Tozu", "Kaldı", "Senin"
     };
 
@@ -17,14 +17,16 @@ namespace WebApplication1.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public AmazonController1(ILogger<WeatherForecastController> logger)
+        public TestController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetAmazonController1")]
+        [HttpGet(Name = "GetBasket")]
         public IEnumerable<AmazonInventoryProductModel> Get()
         {
+            TestClass testClass = new TestClass();
+            testClass.getReq();
             AmazonGetProduct amazonGetProduct = new AmazonGetProduct();
             amazonGetProduct.getProductListFromAmazon();
 
