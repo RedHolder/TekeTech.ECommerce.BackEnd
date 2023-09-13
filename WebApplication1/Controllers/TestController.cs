@@ -25,6 +25,9 @@ namespace WebApplication1.Controllers
         [HttpGet(Name = "GetBasket")]
         public IEnumerable<AmazonInventoryProductModel> Get()
         {
+
+
+            
             TestClass testClass = new TestClass();
             testClass.getReq();
             AmazonGetProduct amazonGetProduct = new AmazonGetProduct();
