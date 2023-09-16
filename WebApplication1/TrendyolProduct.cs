@@ -66,13 +66,7 @@ namespace WebApplication1
                     }
                     else { URLList1.Add(s); }
 
-                string readText = File.ReadAllText(@"C:\File\test.txt");
-                using (StreamWriter writer = new StreamWriter(@"C:\File\test.txt"))
-                {
-                    
-                   // writer.WriteLine(readText + s.ToString()); //Sayfadaki Ürün Linklerini Çıkardık. Text Dosyasına Yazdık Şimdilik
-                  //  writer.WriteLine("");
-                }
+                
                 }
             }
 
@@ -203,15 +197,7 @@ namespace WebApplication1
             }
 
             URLList3.Add(sa);
-            foreach (String mat in URLList3)
-            {
-
-                string s = mat;
-
-                string readText = File.ReadAllText(@"C:\File\test.txt");
-               
-
-            }
+            
 
 
             TrendyolProductModel trendyolProduct = new TrendyolProductModel(URLList3[0], URLList3[1], URLList3[2], URLList3[3], URLList3[4], "1", URLList1, "Trendyol");

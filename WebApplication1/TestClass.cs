@@ -21,26 +21,62 @@ namespace WebApplication1
             var y = response.Content;
             int i = 2;*/
 
+            string url = "https://www.trendyol.com/ac-co-altinyildiz-classics/erkek-siyah-100-pamuk-slim-fit-dar-kesim-bisiklet-yaka-kisa-kollu-tisort-p-220686963";
 
 
-           
+
 
             IWebDriver driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+
+
+
+
+
+
+            driver.Navigate().GoToUrl(url);
+
+
+            bool elementFound = false;
+
+            
+
+            while (!elementFound)
+            {
+                try
+                {
+                    IWebElement loginButton1 = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
+                    loginButton1.Click();
+                    elementFound = true;
+                }
+                catch (NoSuchElementException)
+                {
+                    // Handle the exception (e.g., wait for a moment, retry, etc.)
+                    Console.WriteLine("Element not found. Retrying...");
+                    // You can add additional code here to wait or perform other actions between retries
+
+                }
+            }
+
+            elementFound = false;
+            while (!elementFound)
+            {
+                try
+                {
+                    IWebElement Anladim = driver.FindElement(By.CssSelector("div.campaign-button.bold"));
+                    Anladim.Click(); 
+                    elementFound = true;
+                }
+                catch (NoSuchElementException)
+                {
+                    // Handle the exception (e.g., wait for a moment, retry, etc.)
+                    Console.WriteLine("Element not found. Retrying...");
+                    // You can add additional code here to wait or perform other actions between retries
+
+                }
+            }
+
            
-           
-
-
-          
-
-            driver.Navigate().GoToUrl("https://www.trendyol.com/ac-co-altinyildiz-classics/erkek-siyah-100-pamuk-slim-fit-dar-kesim-bisiklet-yaka-kisa-kollu-tisort-p-220686963");
-
-
-            IWebElement Anladim = driver.FindElement(By.CssSelector("div.campaign-button.bold"));
-            Anladim.Click();
-
-
-            IWebElement loginButton1 = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
-            loginButton1.Click();
 
            
 
@@ -87,7 +123,7 @@ namespace WebApplication1
 
             loginButton.Click();
 
-            bool elementFound = false;
+             elementFound = false;
             while (!elementFound)
             {
                 try
@@ -195,7 +231,10 @@ namespace WebApplication1
             }
 
 
+            while (true)
+            {
 
+            }
 
             int i = 2;
             driver.Quit();
