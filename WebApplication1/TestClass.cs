@@ -230,13 +230,6 @@ namespace WebApplication1
                 }
             }
 
-
-            while (true)
-            {
-
-            }
-
-            int i = 2;
             driver.Quit();
         }
     }

@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Reflection.Emit;
 using System;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Linq;
 
 namespace WebApplication1
 {
@@ -15,20 +16,14 @@ namespace WebApplication1
     {
         public List<TrendyolProductModel> trendyolProductModels;
 
-        public void getreq(string SubURL)
+        public async Task GetReqAsync(string subURL, int page)
         {
             trendyolProductModels = new List<TrendyolProductModel>();
-            // send GET request with RestSharp
-            var client = new RestClient("https://www.trendyol.com");
-            string RequestURLDetail = "https://www.trendyol.com/" + SubURL;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
-            long  id = 112227760;
+            var client = new HttpClient();
+            string requestURLDetail = "https://www.trendyol.com/" + subURL + "?pi=" + page.ToString();
 
-
-
-
-            var request = new RestRequest(RequestURLDetail);
-            var response = client.ExecuteGet(request);
-            var y = response.Content; //seasdarch sonucunu analiz için aldım. Html page elimizde. Buradann linkin altındaki ilk x sayıda ürünü alacağız
+            var response = await client.GetStringAsync(requestURLDetail);
+            var y = response;
 
             string startPattern = "<div class=\"prdct-cntnr-wrppr\">";
             string endPattern = "<div class=\"virtual\">";
@@ -37,7 +32,7 @@ namespace WebApplication1
             Regex startRegex = new Regex(Regex.Escape(startPattern) + "(.*?)" + Regex.Escape(endPattern));
             Match match2 = startRegex.Match(y);
 
-            var x= match2.Groups[1].Value;
+            var x = match2.Groups[1].Value;
 
 
 
@@ -55,50 +50,44 @@ namespace WebApplication1
                     URLList.Add(m.Groups[1].Value);
                 }
             }
-            foreach(String mat in URLList) {
+            foreach (String mat in URLList)
+            {
 
-               
-                if (!mat.Contains("magaza")) {
+
+                if (!mat.Contains("magaza"))
+                {
                     string s = mat;
-                    if (mat.Contains("target")){
+                    if (mat.Contains("target"))
+                    {
                         s = mat.Substring(0, mat.IndexOf("\""));
                         URLList1.Add(s);
                     }
                     else { URLList1.Add(s); }
 
-                
+
                 }
             }
+           
+            var tasks = new Task[URLList1.Count];
 
-            foreach(String CurrentUrl in URLList1)
+            for (int i = 0; i < URLList1.Count; i++)
             {
-
-                getProductDetails(CurrentUrl);
+                tasks[i] = GetProductDetailsAsync(URLList1[i]);
             }
 
-
-            //\"prdct-cntnr-wrppr\" class id'li div ayıklanacak
-
-            //Ayıklandı
-            //Şimdi aynı işi url üzerinden yapıp ürün özelinde veri çekilecek
-
-
-
-
-
+            await Task.WhenAll(tasks);
         }
 
-
-        public void getProductDetails(String URLList1)
+        public async Task GetProductDetailsAsync(string URLList1)
         {
-            var client = new RestClient("https://www.trendyol.com");
-            string RequestURLDetail = RequestURLDetail = "https://www.trendyol.com" + URLList1;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
+            Console.WriteLine(URLList1);
+            Console.WriteLine($"Thread ID: {Thread.CurrentThread.ManagedThreadId}");
 
-           
+            var client = new HttpClient();
+            string requestURLDetail = "https://www.trendyol.com" + URLList1;
 
-            var request = new RestRequest(RequestURLDetail);
-            var response = client.ExecuteGet(request);
-            var y = response.Content;
+            var response = await client.GetStringAsync(requestURLDetail);
+            var y = response;
 
 
 
@@ -112,12 +101,16 @@ namespace WebApplication1
             string findPricePattern = "<div class=\"product-detail-wrapper\">(.*?)<div class=\"product-info-badges\">";
             string pricePattern = "<span class=\"prc-dsc\">(.*?)</span>";
             string sizePattern = "Beden seçmek için tıklayınız\">(.*?)</div>";
+            string shippingPattern = "<div class=\"pr-dd-rs-w\"><i class=\"i-my-orders\"></i><span class=\"pr-dd-nr-text\">Tahmini Kargoya Teslim: </span><span class=\"dd-txt-vl\">(.*?)</span>";
+            string shippingPattern2 = "<strong>en geç yarın</strong>";
             
 
             // Use regular expression to find the specified string
             MatchCollection match1 = Regex.Matches(y, productNameGeneralPattern);
             MatchCollection territoryMatch = Regex.Matches(y, territoryPattern);
             MatchCollection findPriceMatch= Regex.Matches(y, findPricePattern);
+            MatchCollection shippingMatch2 = Regex.Matches(y, shippingPattern2);
+
 
 
             MatchCollection priceMatch = Regex.Matches(findPriceMatch[0].Groups[1].Value, pricePattern);
@@ -197,12 +190,30 @@ namespace WebApplication1
             }
 
             URLList3.Add(sa);
-            
+
+            if (shippingMatch2.Count < 1)
+            {
+                MatchCollection shippingMatch = Regex.Matches(y, shippingPattern);
 
 
-            TrendyolProductModel trendyolProduct = new TrendyolProductModel(URLList3[0], URLList3[1], URLList3[2], URLList3[3], URLList3[4], "1", URLList1, "Trendyol");
-            trendyolProductModels.Add(trendyolProduct);
+                foreach (Match m in shippingMatch)
+                {
+                    if (m.Success)
+                    {
+                        URLList3.Add(m.Groups[1].Value);
+
+                    }
+                }
+            }
+            else { URLList3.Add("1 Gün içinde"); }
            
+
+            URLList3.Add(sa);
+
+
+
+            TrendyolProductModel trendyolProduct = new TrendyolProductModel(URLList3[0], URLList3[1], URLList3[2], URLList3[3], URLList3[4], "1", URLList3[5], URLList1, "Trendyol");
+            trendyolProductModels.Add(trendyolProduct);
         }
     }
 }

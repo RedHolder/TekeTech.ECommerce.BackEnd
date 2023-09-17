@@ -4,6 +4,9 @@ namespace TrendyolProduct.Api.Controllers
 {
     public class GetProductFromTrendyol : Controller
     {
+        private GetProductListFromCategory GetCatalog;
+        private List<String>? CatalogURLList;
+
         private readonly ILogger<WeatherForecastController> _logger;
 
         public GetProductFromTrendyol(ILogger<WeatherForecastController> logger)
@@ -11,13 +14,15 @@ namespace TrendyolProduct.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetProductFromTrendyol")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("{parameter}", Name = "GetProductFromTrendyol")]
+        public IEnumerable<WeatherForecast> Get(string parameter)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            
+            GetCatalog = new GetProductListFromCategory();
+            CatalogURLList = GetCatalog.SendRequest(1, parameter);
+            return Enumerable.Range(1, 20).Select(index => new WeatherForecast
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
+               Summary = CatalogURLList[index],
             })
             .ToArray();
         }

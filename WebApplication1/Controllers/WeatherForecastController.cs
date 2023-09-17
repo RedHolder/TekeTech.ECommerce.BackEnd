@@ -16,30 +16,45 @@ namespace WebApplication1.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-        }
+        } 
 
         TrendyolProduct ty;
 
         [HttpGet("{parameter}", Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get(string parameter)
+        public async Task<IEnumerable<WeatherForecast>> GetAsync(string parameter)
         {
-            ty = new TrendyolProduct();
-            ty.getreq(parameter);
-           
+            var tasks = new List<Task>();
 
-         
-            return Enumerable.Range(1, 20).Select(index => new WeatherForecast
+            ty = new TrendyolProduct();
+            for (int i = 1; i < 2; i++)
             {
-                BrandName = ty.trendyolProductModels[index].FinalBrandName,
-                ProductName = ty.trendyolProductModels[index].FinalProductName,
-                TerritoryName = ty.trendyolProductModels[index].FinalTerritoryName,
-                Price = ty.trendyolProductModels[index].FinalPrice,
-                Sizes = ty.trendyolProductModels[index].FinalSizes,
-                Stock = ty.trendyolProductModels[index].FinalStock,
-                ProductURL = ty.trendyolProductModels[index].ProductURL,
-                ProductChannel = ty.trendyolProductModels[index].ProductChannel
-            })
-            .ToArray();
+                tasks.Add(ty.GetReqAsync(parameter, i));
+            }
+
+            await Task.WhenAll(tasks);
+
+
+            if (ty.trendyolProductModels.Count > 0)
+            {
+                return ty.trendyolProductModels.Select(item => new WeatherForecast
+                {
+                    FinalBrandName = item.FinalBrandName,
+                    FinalProductName = item.FinalProductName,
+                    FinalTerritoryName = item.FinalTerritoryName,
+                    FinalPrice = item.FinalPrice,
+                    FinalSizes = item.FinalSizes,
+                    FinalStock = item.FinalStock,
+                    FinalShippingTime = item.FinalShippingTime,
+                    ProductURL = item.ProductURL,
+                    ProductChannel = item.ProductChannel
+                });
+            }
+            else
+            {
+                // Handle the case where no data was retrieved, possibly returning an empty collection or an error message.
+                // For now, let's return an empty collection:
+                return Enumerable.Empty<WeatherForecast>();
+            }
         }
     }
 }
