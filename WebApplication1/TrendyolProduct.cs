@@ -103,14 +103,14 @@ namespace WebApplication1
             string sizePattern = "Beden seçmek için tıklayınız\">(.*?)</div>";
             string shippingPattern = "<div class=\"pr-dd-rs-w\"><i class=\"i-my-orders\"></i><span class=\"pr-dd-nr-text\">Tahmini Kargoya Teslim: </span><span class=\"dd-txt-vl\">(.*?)</span>";
             string shippingPattern2 = "<strong>en geç yarın</strong>";
-            
+            string featuresPattern = "<ul class=\"detail-attr-container\">(.*?)</ul";
 
             // Use regular expression to find the specified string
             MatchCollection match1 = Regex.Matches(y, productNameGeneralPattern);
             MatchCollection territoryMatch = Regex.Matches(y, territoryPattern);
             MatchCollection findPriceMatch= Regex.Matches(y, findPricePattern);
             MatchCollection shippingMatch2 = Regex.Matches(y, shippingPattern2);
-
+            MatchCollection featuresMatch = Regex.Matches(y, featuresPattern);
 
 
             MatchCollection priceMatch = Regex.Matches(findPriceMatch[0].Groups[1].Value, pricePattern);
@@ -206,13 +206,24 @@ namespace WebApplication1
                 }
             }
             else { URLList3.Add("1 Gün içinde"); }
-           
-
-            URLList3.Add(sa);
 
 
+            if (featuresMatch.Count > 1) { 
+            foreach (Match m in featuresMatch)
+            {
+                if (m.Success)
+                {
+                    URLList3.Add(m.Groups[1].Value);
+                }
+            }
+            }
+            else
+            {
+                URLList3.Add("There is no features to show!");
+            }
 
-            TrendyolProductModel trendyolProduct = new TrendyolProductModel(URLList3[0], URLList3[1], URLList3[2], URLList3[3], URLList3[4], "1", URLList3[5], URLList1, "Trendyol");
+
+            TrendyolProductModel trendyolProduct = new TrendyolProductModel(URLList3[0], URLList3[1], URLList3[2], URLList3[3], URLList3[4], "1", URLList3[5], URLList3[6],URLList1, "Trendyol");
             trendyolProductModels.Add(trendyolProduct);
         }
     }

@@ -9,6 +9,7 @@
         public string FinalSizes;
         public string FinalStock;
         public string FinalShippingTime;
+        public string FinalFeatures;
         public string ProductURL;
         public string ProductChannel;
 
@@ -17,7 +18,7 @@
 
         }
 
-        public TrendyolProductModel(string FinalBrandName, string FinalProductName, string FinalTerritoryName, string FinalPrice, string FinalSizes, string FinalStock,string FinalShippingTime, string ProductURL, string ProductChannel)
+        public TrendyolProductModel(string FinalBrandName, string FinalProductName, string FinalTerritoryName, string FinalPrice, string FinalSizes, string FinalStock,string FinalShippingTime, string FinalFeatures, string ProductURL, string ProductChannel)
         {
             this.FinalBrandName = FinalBrandName;
             this.FinalProductName = FinalProductName;
@@ -26,6 +27,7 @@
             this.FinalSizes = FinalSizes;
             this.FinalStock = FinalStock;
             this.FinalShippingTime = FinalShippingTime;
+            this.FinalFeatures = FinalFeatures;
             this.ProductURL = ProductURL;
             this.ProductChannel = ProductChannel;
         }

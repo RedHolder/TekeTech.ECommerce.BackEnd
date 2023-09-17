@@ -45,6 +45,7 @@ namespace WebApplication1.Controllers
                     FinalSizes = item.FinalSizes,
                     FinalStock = item.FinalStock,
                     FinalShippingTime = item.FinalShippingTime,
+                    FinalFeatures = item.FinalFeatures,
                     ProductURL = item.ProductURL,
                     ProductChannel = item.ProductChannel
                 });

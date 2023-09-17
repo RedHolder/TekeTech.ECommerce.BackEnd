@@ -10,6 +10,7 @@ namespace WebApplication1
         public string? FinalSizes { get; set; }
         public string? FinalStock { get; set; }
         public string? FinalShippingTime { get; set; }
+        public string? FinalFeatures { get; set; }
         public string? ProductURL { get; set; }
         public string? ProductChannel { get; set; }
     }
