@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -6,16 +7,12 @@ namespace WebApplication1.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly DashboardContext _dashboardContext;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(DashboardContext dashboardContext)
         {
-            _logger = logger;
+          _dashboardContext = dashboardContext;
         } 
 
         TrendyolProduct ty;
@@ -33,6 +30,26 @@ namespace WebApplication1.Controllers
 
             await Task.WhenAll(tasks);
 
+            foreach (TrendyolProductModel typ in ty.trendyolProductModels)
+            {
+                var ent = new ProductModel_Trendyol
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FinalBrandName = typ.FinalBrandName,
+                    FinalFeatures = typ.FinalFeatures,
+                    FinalPrice = typ.FinalPrice,
+                    FinalProductName = typ.FinalProductName,
+                    FinalShippingTime = typ.FinalShippingTime,
+                    FinalSizes = typ.FinalSizes,
+                    FinalStock = typ.FinalStock,
+                    FinalTerritoryName = typ.FinalTerritoryName,
+                    ProductChannel = typ.ProductChannel,
+                    ProductURL = typ.ProductURL
+                };
+
+                _dashboardContext.TrendyolProductModel.Add(ent);
+            }
+            _dashboardContext.SaveChanges();
 
             if (ty.trendyolProductModels.Count > 0)
             {

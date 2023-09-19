@@ -8,6 +8,7 @@ namespace WebApplication1
     {
 
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<ProductModel_Trendyol> TrendyolProductModel { get; set; }
 
         public DashboardContext(DbContextOptions<DashboardContext> options) : base(options) { 
         }
