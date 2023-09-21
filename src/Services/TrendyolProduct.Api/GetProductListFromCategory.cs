@@ -3,27 +3,32 @@ using RestSharp;
 using System;
 using System.Runtime.ConstrainedExecution;
 using System.Text.RegularExpressions;
+using TrendyolProduct.Api.Models;
 
 namespace TrendyolProduct.Api
 {
     public class GetProductListFromCategory
     {
         private String URL;
-        private List<String>? CatalogURLList;
+        private String SubURL;
+        private List<ProductURL>? CatalogURLList;
 
 
         public GetProductListFromCategory(){
             this.URL = "https://www.trendyol.com/";
+            CatalogURLList = new List<ProductURL>();
         }
 
-        public List<String> SendRequest(int ListSize, String SubUrl)
+        public List<ProductURL> SendRequest(int ListSize, String SubUrl, int page)
         {
             var client = new RestClient(URL);
-            string RequestURLDetail = URL + SubUrl;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
+            string RequestURLDetail = URL + SubUrl + "?pi=" + page.ToString(); ;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
 
             var request = new RestRequest(RequestURLDetail);
             var response = client.ExecuteGet(request);
             String responseContent = response.Content.ToString();
+
+            this.SubURL = SubUrl;
 
             if(responseContent != null)
             {
@@ -35,12 +40,12 @@ namespace TrendyolProduct.Api
             }
 
             
-            return CatalogURLList ?? new List<String>();
+            return CatalogURLList ?? new List<ProductURL>();
         }
 
-        public List<String> GetCatalogURLList(String responseContent)
+        public List<ProductURL> GetCatalogURLList(String responseContent)
         {
-            List<String> CatalogURLList= new List<String>();
+            List<ProductURL> CatalogURLList= new List<ProductURL>();
             String StartPattern = "<div class=\"prdct-cntnr-wrppr\">";
             String EndPattern = "<div class=\"virtual\">";
             String Content= GetURLByPattern(StartPattern, EndPattern, responseContent);
@@ -61,15 +66,15 @@ namespace TrendyolProduct.Api
             return Result;
         }
 
-        public List<String> GetURLByPattern(String Pattern, String Content)
+        public List<ProductURL> GetURLByPattern(String Pattern, String Content)
         {
-            List<String> CatalogURLList = new List<String>();
+            List<ProductURL> CatalogURLList = new List<ProductURL>();
 
             MatchCollection match = Regex.Matches(Content, Pattern);
 
             List<String> URLList = new List<String>();
             List<String> URLList1 = new List<String>();
-
+            String URL;
             foreach (Match m in match)
             {
                 if (m.Success)
@@ -80,10 +85,14 @@ namespace TrendyolProduct.Api
                         if (m.Groups[1].Value.Contains("target"))
                         {
                             s = m.Groups[1].Value.Substring(0, m.Groups[1].Value.IndexOf("\""));
-                            CatalogURLList.Add(m.Groups[1].Value);
+                            URL=m.Groups[1].Value;
                         }
-                        else { CatalogURLList.Add(m.Groups[1].Value); }
-
+                        else { URL = m.Groups[1].Value; }
+                        ProductURL productURL = new ProductURL();
+                        productURL.Id = Guid.NewGuid().ToString();
+                        productURL.TrendyolProductURL = URL;
+                        productURL.CategoryID = SubURL;
+                        CatalogURLList.Add(productURL);
                     }
                 }
             }
