@@ -9,6 +9,7 @@ namespace AmazonService.Api
 
         public DbSet<ASIN> ASIN { get; set; }
         public DbSet<SKIN> SKIN { get; set; }
+        public DbSet<AmazonOrders> AmazonOrders { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
