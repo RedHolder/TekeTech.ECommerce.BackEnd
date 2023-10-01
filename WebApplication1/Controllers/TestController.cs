@@ -28,8 +28,8 @@ namespace WebApplication1.Controllers
 
 
             
-            TestClass testClass = new TestClass();
-            testClass.getReq();
+            anakin testClass = new anakin();
+            testClass.GetReq();
             AmazonGetProduct amazonGetProduct = new AmazonGetProduct();
             amazonGetProduct.getProductListFromAmazon();
 
