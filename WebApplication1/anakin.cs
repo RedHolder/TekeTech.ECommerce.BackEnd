@@ -8,7 +8,7 @@ namespace WebApplication1
     public class anakin
     {
 
-        /*public List<string> links;
+        public List<string> links;
         public List<string> GetLinksFromPage(string url)
         {
             List<string> linkList = new List<string>();
@@ -44,6 +44,6 @@ namespace WebApplication1
 
             // Elde edilen bağlantıları kullanmak için burada işlem yapabilirsiniz
             
-        }*/
+        }
     }
 }
