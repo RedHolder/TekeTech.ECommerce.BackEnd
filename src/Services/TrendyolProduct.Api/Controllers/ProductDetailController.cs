@@ -20,7 +20,7 @@ namespace TrendyolProduct.Api.Controllers
         [HttpGet(Name = "GetProductDetailTrendyol")]
         public IEnumerable<ProductURL> Get()
         {
-            GetCatalog = new GetProductDetailsByURL();
+            GetCatalog = new GetProductDetailsByURL(_dashboardContext);
             
             CatalogURLList = _dashboardContext.ProductURL.ToList();
             int i = 0;
@@ -29,21 +29,13 @@ namespace TrendyolProduct.Api.Controllers
             {
                 try
                 {
-                    _dashboardContext.Product.Add(GetCatalog.GetProductDetailsAsync(catalog.TrendyolProductURL));
+                  GetCatalog.GetProductDetailsAsync(catalog.TrendyolProductURL);
                 }
                 catch(Exception ex) { 
                 
                     //log
                 }
 
-                if(i > 10)
-                {
-                    _dashboardContext.SaveChanges();
-                    i = 0;
-                }
-                else { i++; }
-
-                
                 
             }
 

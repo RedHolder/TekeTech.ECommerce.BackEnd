@@ -15,7 +15,13 @@ namespace TrendyolProduct.Api
 {
     public class GetProductDetailsByURL
     {
-       
+
+        private TyContext _context; // DbContext'i kullanabilmek için
+
+        public GetProductDetailsByURL(TyContext context)
+        {
+            _context = context;
+        }
 
         public Product GetProductDetailsAsync(string URLList1)
         {
@@ -48,16 +54,32 @@ namespace TrendyolProduct.Api
             string shippingPattern = "<div class=\"pr-dd-rs-w\"><i class=\"i-my-orders\"></i><span class=\"pr-dd-nr-text\">Tahmini Kargoya Teslim: </span><span class=\"dd-txt-vl\">(.*?)</span>";
             string shippingPattern2 = "<strong>en geç yarın</strong>";
             string featuresPattern = "<ul class=\"detail-attr-container\">(.*?)</ul";
+            string Sellerpattern = @"<span>Satıcı Ünvanı<b>\s*(.*?)\s*</b></span>";
 
-            // Use regular expression to find the specified string
+                List<string> urlList = ExtractUrlsFromDiv(y);
+
+                if (urlList.Count == 0)
+                {
+                    urlList.Add("yok");
+                }
+
+                foreach (string url in urlList)
+                {
+                    Console.WriteLine(url);
+                }
+
+                // Use regular expression to find the specified string
             MatchCollection match1 = Regex.Matches(y, productNameGeneralPattern);
             MatchCollection territoryMatch = Regex.Matches(y, territoryPattern);
             MatchCollection findPriceMatch = Regex.Matches(y, findPricePattern);
             MatchCollection shippingMatch2 = Regex.Matches(y, shippingPattern2);
             MatchCollection featuresMatch = Regex.Matches(y, featuresPattern);
+            Match Sellermatch = Regex.Match(y, Sellerpattern);
+
+                Product product = new Product();
 
 
-            MatchCollection priceMatch = Regex.Matches(findPriceMatch[0].Groups[1].Value, pricePattern);
+                MatchCollection priceMatch = Regex.Matches(findPriceMatch[0].Groups[1].Value, pricePattern);
 
 
 
@@ -167,21 +189,61 @@ namespace TrendyolProduct.Api
                 URLList3.Add("There is no features to show!");
             }
 
-            Product product = new Product();
-            product.Id = Guid.NewGuid().ToString();
-            product.ProductBrand = URLList3[0];
+
+            if (Sellermatch.Success)
+            {
+                    // Eşleşen metni al
+             string foundText = Sellermatch.Groups[1].Value;
+             product.SellerName = foundText;
+            }
+                else
+                {
+                    product.SellerName = "";
+                }
+
+
+            product.Brand = URLList3[0];
             product.ProductName = URLList3[1];
-            product.ProductTerritory = URLList3[2];
-            product.ProductPrice = URLList3[3];
-            product.ProductSizes = URLList3[4];
-            product.Stock = "1";
-            product.ShipmentTime = URLList3[5];
-            product.ProductFeatures = URLList3[6];
+            product.City = URLList3[2];
+            product.Price = URLList3[3];
+            product.Sizes = URLList3[4];
+            product.Inventory = 1;
+            product.ShipmentDay = URLList3[5];
+            product.Features = URLList3[6];
             product.ProductURL = URLList1;
-            product.ProductChannel = "Trendyol";
+            product.MarketPlace = "Trendyol";
             product.LastCheckDate = DateTime.Now;
-            
-            return product;
+
+          
+                try
+                {
+                    _context.Products.Add(product);
+                }
+                catch (Exception ex)
+                {
+
+                    //log
+                }
+
+                foreach (string url in urlList)
+                {
+                    var media = new Media { MediaURL = url };
+                    _context.Medias.Add(media);
+
+                    var productMedia = new ProductMedia
+                    {
+                        ProductId = product.ProductId,
+                        Media = media
+                    };
+                    _context.ProductMedias.Add(productMedia);
+                }
+
+                _context.SaveChanges();
+                   
+
+
+
+                return product;
 
             }
             else
@@ -189,6 +251,30 @@ namespace TrendyolProduct.Api
                 Console.WriteLine($"Error: {response.ErrorMessage}");
                 return null;
             }
+        }
+
+        public List<string> ExtractUrlsFromDiv(string html)
+        {
+            List<string> urls = new List<string>();
+            string divPattern = "<div class=\"gallery-container(.*?)<div class=\"container-right-content\">"; // Regex pattern for the inner div content
+
+            Match divMatch = Regex.Match(html, divPattern, RegexOptions.Singleline);
+
+            if (divMatch.Success)
+            {
+                string divContent = divMatch.Groups[1].Value;
+                string urlPattern = @"src=\""([^\""]+)\"""; // Regex pattern to match src attributes
+
+                MatchCollection matches = Regex.Matches(divContent, urlPattern);
+
+                foreach (Match match in matches)
+                {
+                    string url = match.Groups[1].Value;
+                    urls.Add(url);
+                }
+            }
+
+            return urls;
         }
     }
 }

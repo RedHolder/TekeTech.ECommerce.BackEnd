@@ -31,8 +31,8 @@ namespace TrendyolProduct.Api.Controllers
             {
                 var linevar = new Category
                 {
-                    Id= Guid.NewGuid().ToString(),
-                    CategoryID = line
+                    
+                    Name = line
                 };
                 _dashboardContext.Category.Add(linevar);
             }
