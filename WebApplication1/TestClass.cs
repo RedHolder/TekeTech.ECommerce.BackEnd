@@ -230,6 +230,61 @@ namespace WebApplication1
                 }
             }
 
+<<<<<<< Updated upstream
+=======
+            int beklemeSuresiMiliSaniye = 30000;
+            Thread.Sleep(beklemeSuresiMiliSaniye);
+            // Verilen <iframe> elementini bulun
+            IWebElement iframeElement; 
+            elementFound = false;
+            while (!elementFound)
+            {
+                try
+                {
+                    iframeElement = driver.FindElement(By.CssSelector("iframe"));
+                    driver.SwitchTo().Frame(iframeElement);
+                    elementFound = true;
+
+                }
+                catch (NoSuchElementException)
+                {
+                    // Handle the exception (e.g., wait for a moment, retry, etc.)
+                    Console.WriteLine("Element not found. Retrying...");
+                    // You can add additional code here to wait or perform other actions between retries
+
+                }
+            }
+
+            // İframe içine geçiş yapın
+            
+
+            // "Doğrulama kodu" kutusunu bulun ve içine "111111" değerini girin
+            
+            elementFound = false;
+            while (!elementFound)
+            {
+                try
+                {
+                    IWebElement inputElement = driver.FindElement(By.Id("code")); // "code" burada input alanının ID'sini kullanıyorum, ID'yi kendi sayfanızdaki ID ile değiştirin
+                    string inputValue = "123456"; // Göndermek istediğiniz değeri burada ayarlayın
+                    inputElement.Clear(); // Önce mevcut değeri temizleyin (opsiyonel)
+                    inputElement.SendKeys(inputValue);
+                }
+                catch (NoSuchElementException)
+                {
+                    // Handle the exception (e.g., wait for a moment, retry, etc.)
+                    Console.WriteLine("Element not found. Retrying...");
+                   
+                    // You can add additional code here to wait or perform other actions between retries
+
+                }
+            }
+            
+
+
+
+            int i = 2;
+>>>>>>> Stashed changes
             driver.Quit();
         }
     }
