@@ -8,7 +8,7 @@ namespace TrendyolProduct.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductTrendyolController : Controller
+    public class ProductFilteredTrendyolController : Controller
     {
         private GetProductListFromCategory GetCatalog;
         private List<ProductURL>? CatalogURLList;
@@ -16,25 +16,29 @@ namespace TrendyolProduct.Api.Controllers
         private readonly TyContext _dashboardContext;
         private readonly ILog _log;
 
-        public ProductTrendyolController(TyContext dashboardContext)
+        public ProductFilteredTrendyolController(TyContext dashboardContext)
         {
            // _log = LogManager.GetLogger(typeof(ProductTrendyolController));
             _dashboardContext = dashboardContext;
         }
 
-        [HttpGet("{parameter}", Name = "GetProductTrendyol")]
+        [HttpGet("{parameter}", Name = "GetProductFilteredTrendyol")]
         public IEnumerable<ProductURL> Get(string parameter)
         {
 
             GetCatalog = new GetProductListFromCategory();
             var existingCatalogs = _dashboardContext.ProductURL.Select(p => p.TrendyolProductURL).ToList();
 
-            
+            int start;
+            int end = 1000000;
+
+            for(start = 150; start<end; start++)
+            {
                 for (int i = 1; i < 500; i++)
                 {
                     try
                     {
-                        CatalogURLList = GetCatalog.SendRequest(1, parameter, i);
+                        CatalogURLList = GetCatalog.SendRequest1(1, parameter, i, start, start+1);
 
                         foreach (var catalog in CatalogURLList)
                         {
@@ -55,7 +59,19 @@ namespace TrendyolProduct.Api.Controllers
                     }
 
                 }
-            
+                if(CatalogURLList.Count < 1 || CatalogURLList == null)
+                {
+                    break;
+                }
+
+            }
+
+                
+
+
+
+
+
             return CatalogURLList.Take(20).ToArray();
         }
     }

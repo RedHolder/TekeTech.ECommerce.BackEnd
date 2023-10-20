@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using System.Linq;
 using TrendyolProduct.Api.Models;
 using RestSharp;
+using System.Security.Policy;
+using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TrendyolProduct.Api
 {
@@ -217,6 +221,14 @@ namespace TrendyolProduct.Api
           
                 try
                 {
+                    List<Product> productsToDelete = _context.Products.Where(p => p.ProductURL == product.ProductURL).ToList();
+
+                    // Her bir ürünü sildikten sonra yeni ürün bilgilerini ekleyin
+                    foreach (var products in productsToDelete)
+                    {
+                        _context.Products.Remove(product);
+                    }
+
                     _context.Products.Add(product);
                 }
                 catch (Exception ex)
@@ -232,17 +244,29 @@ namespace TrendyolProduct.Api
 
                     var productMedia = new ProductMedia
                     {
-                        ProductId = product.ProductId,
+                        Product = product,
                         Media = media
                     };
                     _context.ProductMedias.Add(productMedia);
                 }
 
-                _context.SaveChanges();
+                
+
+                List<Review> reviews = GetReview(URLList1);
+
+                foreach (Review review in reviews)
+                {
                    
+                    _context.Reviews.Add(review);
 
-
-
+                    var productReview = new ProductReview
+                    {
+                        Product = product,
+                        Review = review
+                    };
+                    _context.ProductReviews.Add(productReview);
+                }
+                _context.SaveChanges();
                 return product;
 
             }
@@ -275,6 +299,78 @@ namespace TrendyolProduct.Api
             }
 
             return urls;
+        }
+
+        public List<Review> GetReview(string productURL)
+        {
+            productURL = "https://www.trendyol.com" + productURL;
+            Uri uri = new Uri(productURL);
+
+            // Get the segments of the URL
+            string[] segments = uri.Segments;
+
+            // Find the segment that contains "p-" and extract the number
+            string productId = null;
+            foreach (string segment in segments)
+            {
+
+                if (segment.Contains("p-"))
+                {
+                    int startIndex = segment.IndexOf("p-");
+                    if (startIndex != -1)
+                    {
+                         productId = segment.Substring(startIndex + 2);
+                        
+                    }
+                    break;
+                }
+            }
+
+            var reviews = new List<Review>();
+
+            if (productId != null)
+            {
+
+                var client = new RestClient("https://public-mdc.trendyol.com/");
+
+
+                var request = new RestRequest("discovery-web-socialgw-service/api/review/" + productId, Method.Get);
+
+                var response = client.Execute(request);
+
+                if (response.IsSuccessful)
+                {
+                    string y = response.Content;
+
+                    JObject data = JsonConvert.DeserializeObject<JObject>(y);
+                    JArray contentArray = data["result"]["productReviews"]["content"] as JArray;
+
+                    foreach (var reviewData in contentArray)
+                    {
+                        var review = new Review
+                        {
+                            UserID = (int)reviewData["id"],
+                            Content = (string)reviewData["comment"],
+                            Rating = (int)reviewData["rate"]
+                        };
+
+                        reviews.Add(review);
+                    }
+
+                    return reviews;
+                }
+                else
+                {
+                    
+                    return reviews;
+                }
+
+
+            }
+            else
+            {
+                return reviews;
+            }
         }
     }
 }

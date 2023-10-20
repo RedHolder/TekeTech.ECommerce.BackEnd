@@ -252,6 +252,9 @@ namespace TrendyolProduct.Api.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
                     b.HasKey("ReviewId");
 
                     b.ToTable("Reviews");
@@ -263,15 +266,13 @@ namespace TrendyolProduct.Api.Migrations
                         .WithMany()
                         .HasForeignKey("CampaignId");
 
-                    b.HasOne("TrendyolProduct.Api.Models.Product", "Product")
+                    b.HasOne("TrendyolProduct.Api.Models.Product", null)
                         .WithMany("ProductCampaign")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Campaign");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TrendyolProduct.Api.Models.ProductMedia", b =>
@@ -282,20 +283,18 @@ namespace TrendyolProduct.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TrendyolProduct.Api.Models.Product", "Product")
+                    b.HasOne("TrendyolProduct.Api.Models.Product", null)
                         .WithMany("ProductMedia")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Media");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TrendyolProduct.Api.Models.ProductReview", b =>
                 {
-                    b.HasOne("TrendyolProduct.Api.Models.Product", "Product")
+                    b.HasOne("TrendyolProduct.Api.Models.Product", null)
                         .WithMany("ProductReview")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,8 +303,6 @@ namespace TrendyolProduct.Api.Migrations
                     b.HasOne("TrendyolProduct.Api.Models.Review", "Review")
                         .WithMany()
                         .HasForeignKey("ReviewId");
-
-                    b.Navigation("Product");
 
                     b.Navigation("Review");
                 });

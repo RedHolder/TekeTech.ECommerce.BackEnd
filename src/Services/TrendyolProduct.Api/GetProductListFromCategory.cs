@@ -22,6 +22,7 @@ namespace TrendyolProduct.Api
         public List<ProductURL> SendRequest(int ListSize, String SubUrl, int page)
         {
             var client = new RestClient(URL);
+           
             string RequestURLDetail = URL + SubUrl + "?pi=" + page.ToString(); ;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
 
             var request = new RestRequest(RequestURLDetail);
@@ -40,6 +41,32 @@ namespace TrendyolProduct.Api
             }
 
             
+            return CatalogURLList ?? new List<ProductURL>();
+        }
+
+        public List<ProductURL> SendRequest1(int ListSize, String SubUrl, int page,int start, int end)
+        {
+            var client = new RestClient(URL);
+           
+            string multiFilter = "?prc=" + start.ToString() + "-" + end.ToString() + "&pi=";
+            string RequestURLDetail = URL + SubUrl + multiFilter + page.ToString(); ;//Bu URL front end'den gönderilecek. Kategorilerle birlikte saklanıyor.
+
+            var request = new RestRequest(RequestURLDetail);
+            var response = client.ExecuteGet(request);
+            String responseContent = response.Content.ToString();
+
+            this.SubURL = SubUrl;
+
+            if (responseContent != null)
+            {
+                this.CatalogURLList = GetCatalogURLList(responseContent);
+            }
+            else
+            {
+                //Log
+            }
+
+
             return CatalogURLList ?? new List<ProductURL>();
         }
 

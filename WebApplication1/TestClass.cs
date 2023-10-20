@@ -230,8 +230,6 @@ namespace WebApplication1
                 }
             }
 
-<<<<<<< Updated upstream
-=======
             int beklemeSuresiMiliSaniye = 30000;
             Thread.Sleep(beklemeSuresiMiliSaniye);
             // Verilen <iframe> elementini bulun
@@ -283,8 +281,6 @@ namespace WebApplication1
 
 
 
-            int i = 2;
->>>>>>> Stashed changes
             driver.Quit();
         }
     }

@@ -46,7 +46,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebAppli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrendyolProduct.Api", "src\Services\TrendyolProduct.Api\TrendyolProduct.Api.csproj", "{9053DE77-64D7-4806-993F-4894B63C0297}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetURL", "src\Clients\GetURL\GetURL.csproj", "{995181BB-571C-4AF9-A7BA-951F7E53832B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetURL", "src\Clients\GetURL\GetURL.csproj", "{995181BB-571C-4AF9-A7BA-951F7E53832B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.ProductGatherer.Api", "src\Services\Trendyol.ProductGatherer.Api\Trendyol.ProductGatherer.Api.csproj", "{080351A6-A4D4-4D2D-95D2-64680840B957}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +92,10 @@ Global
 		{995181BB-571C-4AF9-A7BA-951F7E53832B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{995181BB-571C-4AF9-A7BA-951F7E53832B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{995181BB-571C-4AF9-A7BA-951F7E53832B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080351A6-A4D4-4D2D-95D2-64680840B957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080351A6-A4D4-4D2D-95D2-64680840B957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080351A6-A4D4-4D2D-95D2-64680840B957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080351A6-A4D4-4D2D-95D2-64680840B957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{C98FDEF3-D0AB-42AB-A0DF-F7FEB4A5315A} = {E739F3B2-688E-432A-AB5A-81F5489889EE}
 		{9053DE77-64D7-4806-993F-4894B63C0297} = {E739F3B2-688E-432A-AB5A-81F5489889EE}
 		{995181BB-571C-4AF9-A7BA-951F7E53832B} = {6066ED29-2019-408A-ACC8-DE9EC133AD8F}
+		{080351A6-A4D4-4D2D-95D2-64680840B957} = {E739F3B2-688E-432A-AB5A-81F5489889EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E78AE12D-B4AC-4D8D-B904-6EB4372D084A}

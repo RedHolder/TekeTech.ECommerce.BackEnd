@@ -28,7 +28,6 @@
         public int ProductMediaId { get; set; }
         public int ProductId { get; set; }
         public int MediaId { get; set; }
-        public virtual Product Product { get ; internal set; }
         public Media Media { get; internal set; }
         
     }
@@ -44,7 +43,6 @@
         public int ProductReviewId { get; set; }
         public int ProductId { get; set; }
         public int? ReviewId { get; set; } // ReviewId artık nullable
-        public virtual Product Product { get; internal set; }
         public Review? Review { get; set; } // Review artık nullable
     }
 
@@ -61,8 +59,7 @@
     {
         public int ProductCampaignId { get; set; }
         public int ProductId { get; set; }
-        public int? CampaignId { get; set; } // CampaignId artık nullable
-        public virtual Product Product { get; internal set; }
+        public int? CampaignId { get; set; }
         public Campaign? Campaign { get; set; } // Campaign artık nullable
     }
 
