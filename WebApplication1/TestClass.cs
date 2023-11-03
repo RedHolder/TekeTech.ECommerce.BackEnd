@@ -112,9 +112,9 @@ namespace WebApplication1
             IWebElement ka1 = driver.FindElement(By.Id("login-password-input"));
 
 
-            ka.SendKeys("ahmet_alkoc@hotmail.com");
+            ka.SendKeys("Email@hotmail.com");
 
-            ka1.SendKeys("Da224356151+");
+            ka1.SendKeys("Pasword133133133");
 
             // Oturum açma düğmesi ID'sini kullanarak bulunur
 

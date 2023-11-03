@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration; // Add this namespace for IConfiguration
+using Microsoft.Extensions.Configuration; 
 using TrendyolProduct.Api.Models;
 
 namespace TrendyolProduct.Api
@@ -17,7 +17,7 @@ namespace TrendyolProduct.Api
         public DbSet<ProductURL> ProductURL { get; set; }
         public DbSet<Category> Category { get; set; }
 
-        private readonly IConfiguration _configuration; // Add a private field for IConfiguration
+        private readonly IConfiguration _configuration; 
 
         public TyContext(DbContextOptions<TyContext> options, IConfiguration configuration) : base(options)
         {

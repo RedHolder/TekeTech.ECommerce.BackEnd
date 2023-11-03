@@ -15,7 +15,7 @@ namespace AmazonService.Api.Controllers
 
         public DashboardMainController(DatabaseContext dashboardContext)
         {
-            // _log = LogManager.GetLogger(typeof(ProductTrendyolController));
+           
             _dashboardContext = dashboardContext;
         }
 
@@ -26,25 +26,23 @@ namespace AmazonService.Api.Controllers
         {
             if (days <= 0)
             {
-                // Hatalı giriş durumunda boş bir liste döndürün veya hata işleyin.
-                // Burada sadece boş bir liste döndürülmüştür.
+                
                 return new List<DashboardModel>();
             }
 
-            // CreateDashboardModels fonksiyonunu kullanarak DashboardModels oluşturun
+            
             List<DashboardModel> DashboardModels = new List<DashboardModel>();
 
-            // AmazonOrders tablosundaki verileri tarihlerine göre gruplayın
             var groupedOrders = _dashboardContext.AmazonOrders
                 .GroupBy(order => order.OrderDate.Date)
                 .ToList();
 
             foreach (var group in groupedOrders)
             {
-                // Her grup için bir DashboardModel oluşturun
+               
                 var dm = new DashboardModel();
 
-                // Günlük referansı OrderDate'den alın
+                
                 dm.Card1 = group.Sum(order => order.SalePrice).ToString(); // Günlük toplam SalePrice
                 dm.Card2 = (group.Sum(order => order.SalePrice) - group.Sum(order => order.BuyingPrice)).ToString(); // Günlük SalePrice - BuyingPrice
                 dm.Card3 = ((float)group.Count(order => order.DeliveryDate != null) / group.Count()).ToString(); // Delivery Date'i null olmayan ürünlerin oranı
@@ -57,7 +55,6 @@ namespace AmazonService.Api.Controllers
                 DashboardModels.Add(dm);
             }
 
-            // Belirtilen gün sayısına göre filtrele
             DashboardModels = DashboardModels
                 .Where(dm => (DateTime.Now.Date - dm.Orders.First().OrderDate.Date).TotalDays <= days)
                 .ToList();

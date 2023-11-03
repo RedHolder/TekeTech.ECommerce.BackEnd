@@ -221,13 +221,7 @@ namespace TrendyolProduct.Api
           
                 try
                 {
-                    List<Product> productsToDelete = _context.Products.Where(p => p.ProductURL == product.ProductURL).ToList();
-
-                    // Her bir ürünü sildikten sonra yeni ürün bilgilerini ekleyin
-                    foreach (var products in productsToDelete)
-                    {
-                        _context.Products.Remove(product);
-                    }
+                    
 
                     _context.Products.Add(product);
                 }
